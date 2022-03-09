@@ -446,7 +446,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: b1228e2f0889c0849918727de3b6260c, type: 3}
-  m_NotificationBehavior: 0
+  m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -457,7 +457,71 @@ MonoBehaviour:
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_ActionEvents: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1317300291}
+        m_TargetAssemblyTypeName: movement, Assembly-CSharp
+        m_MethodName: Move
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 8e284d79-b336-458e-8d8d-0896c67cdd8e
+    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 53d2a630-9d6a-4c0a-bf84-e7828a7d2ce5
+    m_ActionName: Player/Look[/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 00cb7a9b-a4cc-4260-82ff-104d52608acc
+    m_ActionName: Player/Fire[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 17bca1af-9d39-4b27-9685-385753cb251f
+    m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f528a00a-85f4-4ba0-a9fa-de1e2d109dd7
+    m_ActionName: UI/Submit[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8a5cbe97-b75d-4aec-86b6-28e4641781bc
+    m_ActionName: UI/Cancel[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a01d463b-202a-43f4-819c-2c55dcdfb00f
+    m_ActionName: UI/Point[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0a475101-cb17-4831-9a4f-4480e9abbac6
+    m_ActionName: UI/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 315576ec-9ccc-46ce-83bb-96d5c24fbf9c
+    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9f4aa198-b428-43a9-a7a1-7b94a150bdae
+    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3f01533f-6378-4e63-b627-86ed79a7f9bf
+    m_ActionName: UI/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2085c780-8aab-481f-83dd-f15c5d0cc3ca
+    m_ActionName: UI/TrackedDevicePosition
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 572d6312-1cc8-4c81-b95c-8e3f4442839c
+    m_ActionName: UI/TrackedDeviceOrientation
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -603,7 +667,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8623599969642931713, guid: 3a2c90a52d853764f8d8e1b39f8637ef, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8623599969642931713, guid: 3a2c90a52d853764f8d8e1b39f8637ef, type: 3}
       propertyPath: m_LocalPosition.x
@@ -649,6 +713,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AIPlayer2
       objectReference: {fileID: 0}
+    - target: {fileID: 8627743489495245155, guid: 3a2c90a52d853764f8d8e1b39f8637ef, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8640483416783280481, guid: 3a2c90a52d853764f8d8e1b39f8637ef, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -679,7 +747,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5754e2347949a746be2a1afa63378bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 1
+  movementSpeed: 5
   targets:
   - {fileID: 2118033133}
 --- !u!1001 &2118033132
@@ -695,7 +763,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4634219296780586, guid: 2497c47670e702543a4c20c4c442311f, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4634219296780586, guid: 2497c47670e702543a4c20c4c442311f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -777,7 +845,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8623599969642931713, guid: 3a2c90a52d853764f8d8e1b39f8637ef, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8623599969642931713, guid: 3a2c90a52d853764f8d8e1b39f8637ef, type: 3}
       propertyPath: m_LocalPosition.x
@@ -823,6 +891,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AIPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 8627743489495245155, guid: 3a2c90a52d853764f8d8e1b39f8637ef, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8640483416783280481, guid: 3a2c90a52d853764f8d8e1b39f8637ef, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -848,7 +920,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5754e2347949a746be2a1afa63378bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 1
+  movementSpeed: 5
   targets:
   - {fileID: 2118033133}
   - {fileID: 2072963192}

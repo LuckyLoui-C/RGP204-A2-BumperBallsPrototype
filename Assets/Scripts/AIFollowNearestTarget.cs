@@ -5,52 +5,92 @@ using UnityEngine;
 
 public class AIFollowNearestTarget : MonoBehaviour {
 
-    [SerializeField] private float movementSpeed = 1.0f;
-
-    // todo get this is start
-    [SerializeField] private Transform[] targets;
+    private List<Transform> targets = new List<Transform>();
 
     private bool targeting;
     private Transform currentTarget;
+
+    private AIMovementInput movement;
+    private BallCollisionDetection detector;
+    private bool collided;
     
     private void Start() {
-        currentTarget = FindNearestTarget();
+
+        // find all available other balls
+        BallCollisionDetection[] possibleTargets = FindObjectsOfType<BallCollisionDetection>();
+        foreach (BallCollisionDetection aiCollisionDetection in possibleTargets) {
+            targets.Add(aiCollisionDetection.transform);
+        }
+        // Debug.Log(":: target total " + possibleTargets.Length);
+        
+        // get components
+        movement = GetComponent<AIMovementInput>();
+        detector = GetComponent<BallCollisionDetection>();
+        if (detector != null) {
+            detector.OnCollisionDetected += CollisionDetected;
+        }
+
+        // move toward centre at start
+        currentTarget = GameObject.FindGameObjectWithTag("InitialTarget").transform;
     }
 
-    private void Update() {
+    private void CollisionDetected() {
+        collided = true;
+        // FindNearestTarget();
+    }
 
-        if (currentTarget != null) {
-            // Move our position a step closer to the target.
-            float step =  movementSpeed * Time.deltaTime; // calculate distance to move
-            transform.position = Vector3.MoveTowards(transform.position, currentTarget.position, step);
+    private void FixedUpdate() {
 
-            // Check if the position of the cube and sphere are approximately equal.
-            // if (Vector3.Distance(transform.position, target.position) < 0.001f) {
-            //     // Swap the position of the cylinder.
-            //     target.position *= -1.0f;
-            // }
+        if (currentTarget == null || !currentTarget.gameObject.activeSelf) {
+            Debug.Log(":: need to find new target ::");
+            FindNearestTarget();
+
+            if (currentTarget == null || !currentTarget.gameObject.activeSelf) {
+                movement.Move(Vector3.zero);
+                return;
+            }
+        }
+
+        if (currentTarget != null && !collided) {
+            // Get new position
+            Vector3 newPosn = transform.position - currentTarget.position;
+            movement.Move(Vector3.Normalize(-newPosn));
+            
+            // FindNearestTarget();
+            
+        } else if (collided) {
+            // FindNearestTarget();
+            StartCoroutine(ReturnToFollowMovement());
         }
     }
 
-    private Transform FindNearestTarget() {
-        float nearestDistance = Vector3.Distance(transform.position, targets[0].position);
+    private IEnumerator ReturnToFollowMovement() {
+        yield return new WaitForSeconds(1.5f);
+        collided = false;
+        // TODO this needs to be called somewhere again
+        // FindNearestTarget();
+    }
+
+    private void FindNearestTarget() {
+        float nearestDistance = 0.0f;
         int nearestIndex = 0;
         
-        for(int i = 1; i < targets.Length; i++) {
+        
+        for(int i = 0; i < targets.Count; i++) {
+            if (targets[i].gameObject.name == gameObject.name) {
+                // found self so don't do anything
+                continue;
+            }
             float temp = Vector3.Distance(transform.position, targets[i].position);
-            if (temp < nearestDistance) {
+            if (nearestDistance == 0.0f || temp < nearestDistance) {
                 nearestIndex = i;
                 nearestDistance = temp;
             }
         }
         
-        Debug.Log(gameObject.name + ":: nearest index :: " + nearestIndex + " :: " + targets[nearestIndex].gameObject.name);
-        Debug.Log(gameObject.name + ":: nearest distance :: " + nearestDistance + " :: " + targets[nearestIndex].gameObject.name);
+        // Debug.Log(gameObject.name + ":: nearest index :: " + nearestIndex + " :: " + targets[nearestIndex].gameObject.name);
+        // Debug.Log(gameObject.name + ":: nearest distance :: " + nearestDistance + " :: " + targets[nearestIndex].gameObject.name);
 
-        return targets[nearestIndex];
-    }
-
-    private void OnCollisionEnter(Collision collision) {
-        Debug.Log(":: " + gameObject.name + " :: hit :: " + collision.gameObject.name);
+        currentTarget = targets[nearestIndex];
     }
 }

@@ -5,18 +5,12 @@ using UnityEngine.InputSystem;
 
 public class Movement : MonoBehaviour {
 
-    public float speed = 0;
+    [SerializeField] private float speed = 2.0f;
 
     private Vector3 movementDirection;
-    private bool stopMoving;
     private Rigidbody rb;
     private float originalSpeed;
     private float currentSpeed;
-
-    public bool StopMoving {
-        get => stopMoving;
-        set => stopMoving = value;
-    }
 
     public Vector3 MovementDirection {
         set => movementDirection = value;
@@ -27,16 +21,13 @@ public class Movement : MonoBehaviour {
     }
 
     void Start() {
-        rb = gameObject.GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         originalSpeed = speed;
         currentSpeed = speed;
     }
 
-    private void FixedUpdate()
-    {
-        if (!stopMoving) {
-            rb.AddForce(movementDirection * currentSpeed, ForceMode.Impulse);
-        }
+    private void FixedUpdate() {
+        rb.AddForce(movementDirection * currentSpeed, ForceMode.Impulse);
     }
 
     public void ResetSpeed() {

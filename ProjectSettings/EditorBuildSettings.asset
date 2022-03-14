@@ -8,4 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TestLevel.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 9e0c1c726bfbfd4428d03db81b710a6a
+  - enabled: 1
+    path: Assets/Scenes/SceneWithTimer.unity
+    guid: c603dea23bb611a4187ac5f149e4c553
   m_configObjects: {}

@@ -13,9 +13,8 @@ public class AIFollowNearestTarget : MonoBehaviour {
     private AIMovementInput movement;
     private BallCollisionDetection detector;
     private bool collided;
-    
-    private void Start() {
 
+    private void Start() {
         // find all available other balls
         BallCollisionDetection[] possibleTargets = FindObjectsOfType<BallCollisionDetection>();
         foreach (BallCollisionDetection aiCollisionDetection in possibleTargets) {

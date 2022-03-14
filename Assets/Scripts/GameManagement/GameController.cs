@@ -8,22 +8,12 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour {
 
     [SerializeField] private GameObject gameOverScreen;
-    [SerializeField] private GameObject gameStartScreen;
-    [SerializeField] private GameObject inGameCanvas;
     [SerializeField] private TextMeshProUGUI winnerNameText;
-    [SerializeField] private GamePlayTimer gamePlayTimer;
-
-    private SceneHandler sceneManager;
-
-    public bool playersCanMove;
 
     private List<string> deadPlayers;
     private Dictionary<string, PlayerController> players;
-
+    
     private void Awake() {
-        sceneManager = FindObjectOfType<SceneHandler>();
-        
-        playersCanMove = false;
 
         PlayerController[] playerControllers = FindObjectsOfType<PlayerController>();
         players = new Dictionary<string, PlayerController>();
@@ -38,6 +28,7 @@ public class GameController : MonoBehaviour {
 
             controller.OnPlayerDied += PlayerDied;
         }
+        
         // force save
         PlayerPrefs.Save();
     }
@@ -55,38 +46,23 @@ public class GameController : MonoBehaviour {
                 winnerNameText.text = playerName;
             }
             GameOver();
-
         }
     }
 
     private void Start() {
         deadPlayers = new List<string>();
-
+        
         gameOverScreen.SetActive(false);
         // todo move this when menu is added
+        Time.timeScale = 1.0f;
     }
 
-    public void StartGame(float delayStartTime)
-    {
-        StartCoroutine(DelayStart(delayStartTime));
-    }
-
-    IEnumerator DelayStart(float delayTime)
-    {
-        yield return new WaitForSeconds(delayTime);
-        playersCanMove = true;
-        gameStartScreen.SetActive(false);
-        inGameCanvas.SetActive(true);
-    }
-
-    public void GameOver() {
-        playersCanMove = false;
-        gamePlayTimer.timerIsRunning = false;
-        inGameCanvas.SetActive(false);
+    private void GameOver() {
         gameOverScreen.SetActive(true);
+        Time.timeScale = 0.0f;
     }
 
     public void ReplayGame() {
-        sceneManager.LoadScene("SceneWithTimer");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

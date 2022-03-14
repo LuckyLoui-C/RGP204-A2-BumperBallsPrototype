@@ -7,8 +7,6 @@ using UnityEngine;
 /// </summary>
 public class AIMovementInput : MonoBehaviour, MovementInput {
     
-    [SerializeField] private float resetSpeedTime = 0.5f;
-    
     private Vector3 movementDirection;
     private Movement movement;
     
@@ -23,13 +21,14 @@ public class AIMovementInput : MonoBehaviour, MovementInput {
         movement.MovementDirection = movementDirection;
     }
 
-    public void UpdateMoveDirection(float speed) {
+    public void UpdateMoveDirection(Vector3 newDirection, float speed) {
+        movement.MovementDirection = movementDirection;
         movement.CurrentSpeed = speed;
-        StartCoroutine(ResetForwardSpeed());
+        StartCoroutine(ResetSpeed());
     }
 
-    private IEnumerator ResetForwardSpeed() {
-        yield return new WaitForSeconds(resetSpeedTime); 
+    private IEnumerator ResetSpeed() {
+        yield return new WaitForSeconds(0.8f); // todo remove magic number
         movement.ResetSpeed();
     }
 }

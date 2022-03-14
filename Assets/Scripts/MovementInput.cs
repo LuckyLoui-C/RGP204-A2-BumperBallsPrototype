@@ -8,5 +8,5 @@ using UnityEngine;
 /// </summary>
 public interface MovementInput {
 
-    void UpdateMoveDirection(float speed);
+    void UpdateMoveDirection(Vector3 newDirection, float speed);
 }

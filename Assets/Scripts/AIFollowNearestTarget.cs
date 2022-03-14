@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class AIFollowNearestTarget : MonoBehaviour {
 
-    [SerializeField] private float waitTimeAfterCollision = 0.5f;
-
     private List<Transform> targets = new List<Transform>();
 
     private bool targeting;
@@ -15,19 +13,15 @@ public class AIFollowNearestTarget : MonoBehaviour {
     private AIMovementInput movement;
     private BallCollisionDetection detector;
     private bool collided;
-    private bool collidedThisFrame;
     
     private void Start() {
 
         // find all available other balls
         BallCollisionDetection[] possibleTargets = FindObjectsOfType<BallCollisionDetection>();
         foreach (BallCollisionDetection aiCollisionDetection in possibleTargets) {
-            if (aiCollisionDetection.gameObject.name == this.gameObject.name) {
-                // dont add self
-                continue;
-            }
             targets.Add(aiCollisionDetection.transform);
         }
+        // Debug.Log(":: target total " + possibleTargets.Length);
         
         // get components
         movement = GetComponent<AIMovementInput>();
@@ -42,38 +36,39 @@ public class AIFollowNearestTarget : MonoBehaviour {
 
     private void CollisionDetected() {
         collided = true;
-        collidedThisFrame = true;
+        // FindNearestTarget();
     }
 
     private void FixedUpdate() {
 
         if (currentTarget == null || !currentTarget.gameObject.activeSelf) {
-            // current target fell off, so find new one
+            Debug.Log(":: need to find new target ::");
             FindNearestTarget();
 
             if (currentTarget == null || !currentTarget.gameObject.activeSelf) {
-                // no targets left so stop
                 movement.Move(Vector3.zero);
                 return;
             }
         }
-        if (collided && collidedThisFrame) {
-            // Debug.Log(":: ----- collided going back " + gameObject.name);
-            collidedThisFrame = false;
-            StartCoroutine(ReturnToFollowMovement());
-        } else if (currentTarget != null && !collided) {
+
+        if (currentTarget != null && !collided) {
             // Get new position
             Vector3 newPosn = transform.position - currentTarget.position;
-            // Debug.Log(":: new posn :: " + gameObject.name + " :: " + newPosn + " :: Norm :: "+ Vector3.Normalize(-newPosn));
             movement.Move(Vector3.Normalize(-newPosn));
             
-        } 
+            // FindNearestTarget();
+            
+        } else if (collided) {
+            // FindNearestTarget();
+            StartCoroutine(ReturnToFollowMovement());
+        }
     }
 
     private IEnumerator ReturnToFollowMovement() {
-        yield return new WaitForSeconds(waitTimeAfterCollision);
+        yield return new WaitForSeconds(0.8f);// todo remove magic number
         collided = false;
-        FindNearestTarget();
+        // TODO this needs to be called somewhere again
+        // FindNearestTarget();
     }
 
     private void FindNearestTarget() {
@@ -82,6 +77,10 @@ public class AIFollowNearestTarget : MonoBehaviour {
         
         
         for(int i = 0; i < targets.Count; i++) {
+            if (targets[i].gameObject.name == gameObject.name) {
+                // found self so don't do anything
+                continue;
+            }
             float temp = Vector3.Distance(transform.position, targets[i].position);
             if (nearestDistance == 0.0f || temp < nearestDistance) {
                 nearestIndex = i;

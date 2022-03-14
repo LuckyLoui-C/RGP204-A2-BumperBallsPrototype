@@ -10,7 +10,7 @@ public class InWaterCollisionDetection : MonoBehaviour {
             // if a player falls in just disable them for now
             // TODO add end of game detection?
             // Debug.Log(":: in water :: " + collision.gameObject.name);
-            collision.gameObject.SetActive(false);
+            collision.gameObject.GetComponent<PlayerController>().PlayerDied();
         }
     }
 }

@@ -21,7 +21,14 @@ public class AIMovementInput : MonoBehaviour, MovementInput {
         movement.MovementDirection = movementDirection;
     }
 
-    public void UpdateMoveDirection(Vector3 newDirection) {
+    public void UpdateMoveDirection(Vector3 newDirection, float speed) {
         movement.MovementDirection = movementDirection;
+        movement.CurrentSpeed = speed;
+        StartCoroutine(ResetSpeed());
+    }
+
+    private IEnumerator ResetSpeed() {
+        yield return new WaitForSeconds(0.8f); // todo remove magic number
+        movement.ResetSpeed();
     }
 }

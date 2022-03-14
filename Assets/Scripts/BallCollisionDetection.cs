@@ -6,6 +6,8 @@ using UnityEngine;
 public class BallCollisionDetection : MonoBehaviour {
 
     public event Action OnCollisionDetected;
+
+    [SerializeField] private float repelSpeed = 4.0f;
     
     private MovementInput movementInput;
     private Rigidbody rb;
@@ -24,7 +26,7 @@ public class BallCollisionDetection : MonoBehaviour {
             Vector3 vel = rb.velocity;
             float tempf = 1.0f;
             Vector3 currentMovement = new Vector3(vel.x > 0 ? -tempf : tempf, 0.0f, vel.z > 0 ? -tempf : tempf);
-            movementInput.UpdateMoveDirection(currentMovement);
+            movementInput.UpdateMoveDirection(currentMovement, repelSpeed);
             
             OnCollisionDetected?.Invoke();
 

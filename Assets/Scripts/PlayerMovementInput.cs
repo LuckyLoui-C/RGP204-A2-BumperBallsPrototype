@@ -24,7 +24,7 @@ public class PlayerMovementInput : MonoBehaviour, MovementInput {
         movement.MovementDirection = movementDirection;
     }
 
-    public void UpdateMoveDirection(Vector3 newDirection) {
+    public void UpdateMoveDirection(Vector3 newDirection, float speed) {
         movement.MovementDirection = movementDirection;
     }
 }

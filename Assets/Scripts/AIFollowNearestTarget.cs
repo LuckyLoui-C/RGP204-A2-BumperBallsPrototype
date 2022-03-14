@@ -65,7 +65,7 @@ public class AIFollowNearestTarget : MonoBehaviour {
     }
 
     private IEnumerator ReturnToFollowMovement() {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.8f);// todo remove magic number
         collided = false;
         // TODO this needs to be called somewhere again
         // FindNearestTarget();

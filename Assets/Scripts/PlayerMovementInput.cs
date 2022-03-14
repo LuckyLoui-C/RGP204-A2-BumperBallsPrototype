@@ -8,8 +8,12 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class PlayerMovementInput : MonoBehaviour, MovementInput {
     
+    [SerializeField] private float resetPlayerCanMoveTime = 0.5f;
+    
     private Vector3 movementDirection = Vector3.zero;
     private Movement movement;
+
+    private bool repelling;
     
     private void Start() {
         movement = GetComponent<Movement>();
@@ -17,14 +21,25 @@ public class PlayerMovementInput : MonoBehaviour, MovementInput {
     
     public void Move(InputAction.CallbackContext context) {
         // called on player prefab
-        Vector2 movementVector = context.ReadValue<Vector2>();
+        if (!repelling) {
+            // player can only move if they are not being pushed back after collision
+            Vector2 movementVector = context.ReadValue<Vector2>();
 
-        movementDirection.x = movementVector.x;
-        movementDirection.z = movementVector.y;
-        movement.MovementDirection = movementDirection;
+            movementDirection.x = movementVector.x;
+            movementDirection.z = movementVector.y;
+            movement.MovementDirection = movementDirection;
+        }
     }
 
-    public void UpdateMoveDirection(Vector3 newDirection, float speed) {
-        movement.MovementDirection = movementDirection;
+    public void UpdateMoveDirection(float speed) {
+        movement.CurrentSpeed = speed;
+        repelling = true;
+        StartCoroutine(ResetPlayerCanMove());
+    }
+
+    private IEnumerator ResetPlayerCanMove() {
+        yield return new WaitForSeconds(resetPlayerCanMoveTime);
+        movement.ResetSpeed();
+        repelling = false;
     }
 }

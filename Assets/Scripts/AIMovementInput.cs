@@ -6,6 +6,8 @@ using UnityEngine;
 /// AI version of input script to capture movement direction
 /// </summary>
 public class AIMovementInput : MonoBehaviour, MovementInput {
+
+    [SerializeField] private float resetSpeedTime = 0.5f;
     
     private Vector3 movementDirection;
     private Movement movement;
@@ -21,14 +23,13 @@ public class AIMovementInput : MonoBehaviour, MovementInput {
         movement.MovementDirection = movementDirection;
     }
 
-    public void UpdateMoveDirection(Vector3 newDirection, float speed) {
-        movement.MovementDirection = movementDirection;
+    public void UpdateMoveDirection(float speed) {
         movement.CurrentSpeed = speed;
-        StartCoroutine(ResetSpeed());
+        StartCoroutine(ResetForwardSpeed());
     }
 
-    private IEnumerator ResetSpeed() {
-        yield return new WaitForSeconds(0.8f); // todo remove magic number
+    private IEnumerator ResetForwardSpeed() {
+        yield return new WaitForSeconds(resetSpeedTime); 
         movement.ResetSpeed();
     }
 }

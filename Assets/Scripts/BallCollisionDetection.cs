@@ -8,28 +8,30 @@ public class BallCollisionDetection : MonoBehaviour {
     public event Action OnCollisionDetected;
 
     [SerializeField] private float repelSpeed = 4.0f;
+    [SerializeField] private float reenableColliderTime = 0.5f;
     
     private MovementInput movementInput;
-    private Rigidbody rb;
-    
+
+    private SphereCollider col;
     
     private void Start() {
         movementInput = GetComponent<MovementInput>();
-        rb = GetComponent<Rigidbody>();
+        col = GetComponent<SphereCollider>();
     }
-    
-    private void OnCollisionEnter(Collision collision) {
 
-        if (collision.gameObject.CompareTag("Player")) {
-            // Debug.Log(":: " + gameObject.name + " :: hit :: " + collision.gameObject.name);
+    private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.CompareTag("Player")) {
+            // Debug.Log(":: " + gameObject.name + " :: hit :: " + other.gameObject.name);
 
-            Vector3 vel = rb.velocity;
-            float tempf = 1.0f;
-            Vector3 currentMovement = new Vector3(vel.x > 0 ? -tempf : tempf, 0.0f, vel.z > 0 ? -tempf : tempf);
-            movementInput.UpdateMoveDirection(currentMovement, repelSpeed);
-            
+            movementInput.UpdateMoveDirection(-repelSpeed);
+            col.enabled = false;
+            StartCoroutine(EnableCollider());
             OnCollisionDetected?.Invoke();
-
         }
+    }
+
+    private IEnumerator EnableCollider() {
+        yield return new WaitForSeconds(reenableColliderTime);
+        col.enabled = true;
     }
 }

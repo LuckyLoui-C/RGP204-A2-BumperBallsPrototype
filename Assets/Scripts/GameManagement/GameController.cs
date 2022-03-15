@@ -63,7 +63,7 @@ public class GameController : MonoBehaviour {
         deadPlayers = new List<string>();
 
         gameOverScreen.SetActive(false);
-        // todo move this when menu is added
+        Time.timeScale = 0.0f;
     }
 
     public void StartGame(float delayStartTime)
@@ -73,10 +73,11 @@ public class GameController : MonoBehaviour {
 
     IEnumerator DelayStart(float delayTime)
     {
-        yield return new WaitForSeconds(delayTime);
+        yield return new WaitForSecondsRealtime(delayTime);
         playersCanMove = true;
         gameStartScreen.SetActive(false);
         inGameCanvas.SetActive(true);
+        Time.timeScale = 1.0f;
     }
 
     public void GameOver() {
@@ -84,6 +85,8 @@ public class GameController : MonoBehaviour {
         gamePlayTimer.timerIsRunning = false;
         inGameCanvas.SetActive(false);
         gameOverScreen.SetActive(true);
+        
+        Time.timeScale = 0.0f;
     }
 
     public void ReplayGame() {

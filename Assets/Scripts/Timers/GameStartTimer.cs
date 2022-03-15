@@ -9,8 +9,7 @@ public class GameStartTimer : MonoBehaviour
     public TMPro.TextMeshProUGUI timeText;
     private GameObject startGameCanvas;
     private GameController gameManager;
-
-    public bool timerIsRunning = false;
+    
     public float timeToPlay = 3.0f; // How long before game starts
     public float delayStart = 1.0f;
 
@@ -19,31 +18,26 @@ public class GameStartTimer : MonoBehaviour
         timeText = FindObjectOfType<GameStartTimer>().GetComponent<TMPro.TextMeshProUGUI>(); // Reference timer text
         gameManager = FindObjectOfType<GameController>();
 
-        timerIsRunning = true; // Start the timer
+        StartCoroutine(CountDown());
     }
 
-    void Update()
-    {
-        if (timerIsRunning)
-        {
-            timeToPlay -= Time.deltaTime; // Every frame, minus deltaTime from remaining time, counts down.
-            DisplayTime(timeToPlay);
+    private IEnumerator CountDown() {
+        float totalTime = 0;
+        DisplayTime(timeToPlay);
+        
+        while(totalTime <= timeToPlay) {
+            yield return new WaitForSecondsRealtime(1.0f);
+            totalTime++;
+            DisplayTime(timeToPlay - totalTime);
         }
-        else
-        {
-            gameManager.StartGame(delayStart);
-        }
+        
+        gameManager.StartGame(delayStart);
     }
-    void DisplayTime(float timeToDisplay) // TODO: Timer UI
-    {
-        if (timeToPlay <= 0.0f)
-        {
-            timeText.text = string.Format("GO!");
-            timerIsRunning = false;
-        }
-        else
-        {
-            timeToDisplay += 1;
+    
+    private void DisplayTime(float timeToDisplay) {
+        if (timeToDisplay <= 0.0f) {
+            timeText.text = "GO!";
+        } else {
             float seconds = Mathf.FloorToInt(timeToDisplay % 60); // Modulus 60 to get sec. remaining
             timeText.text = string.Format("{0:0}", seconds);
         }

@@ -29,12 +29,13 @@ public class GameController : MonoBehaviour {
         players = new Dictionary<string, PlayerController>();
 
         foreach (PlayerController controller in playerControllers) {
-            string playerName = controller.gameObject.name;
+            string playerName = controller.PlayerName;
             players[playerName] = controller;
 
-            if (!PlayerPrefs.HasKey(playerName + "_type")) {
-                PlayerPrefs.SetInt(playerName + "_type", playerName == "Player1" ? 0 : 1);
-            }
+            // if (!PlayerPrefs.HasKey(playerName + "_type")) {
+            //     PlayerPrefs.SetInt(playerName + "_type", playerName == "Yellow" ||
+            //                                              playerName == "Green" ? 0 : 1);
+            // }
 
             controller.OnPlayerDied += PlayerDied;
         }

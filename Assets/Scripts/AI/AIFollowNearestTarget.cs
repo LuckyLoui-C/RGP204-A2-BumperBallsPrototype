@@ -47,6 +47,10 @@ public class AIFollowNearestTarget : MonoBehaviour {
 
     private void FixedUpdate() {
 
+        if (movement == null) {
+            movement = GetComponent<AIMovementInput>();
+        }
+
         if (currentTarget == null || !currentTarget.gameObject.activeSelf) {
             // current target fell off, so find new one
             FindNearestTarget();
@@ -66,7 +70,6 @@ public class AIFollowNearestTarget : MonoBehaviour {
             Vector3 newPosn = transform.position - currentTarget.position;
             // Debug.Log(":: new posn :: " + gameObject.name + " :: " + newPosn + " :: Norm :: "+ Vector3.Normalize(-newPosn));
             movement.Move(Vector3.Normalize(-newPosn));
-            
         } 
     }
 

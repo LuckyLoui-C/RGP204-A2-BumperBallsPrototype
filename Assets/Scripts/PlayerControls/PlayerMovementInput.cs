@@ -8,8 +8,7 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class PlayerMovementInput : MonoBehaviour, MovementInput {
     
-    [SerializeField] private float resetPlayerCanMoveTime = 0.5f;
-    
+    private float resetPlayerCanMoveTime = 0.5f;
     private Vector3 movementDirection = Vector3.zero;
     private Movement movement;
 
@@ -35,6 +34,10 @@ public class PlayerMovementInput : MonoBehaviour, MovementInput {
         movement.CurrentSpeed = speed;
         repelling = true;
         StartCoroutine(ResetPlayerCanMove());
+    }
+
+    public void SetResetTime(float resetTime) {
+        this.resetPlayerCanMoveTime = resetTime;
     }
 
     private IEnumerator ResetPlayerCanMove() {

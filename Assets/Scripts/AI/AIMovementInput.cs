@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,8 +8,7 @@ using UnityEngine;
 /// </summary>
 public class AIMovementInput : MonoBehaviour, MovementInput {
     
-    [SerializeField] private float resetSpeedTime = 0.5f;
-    
+    private float resetSpeedTime = 0.5f;
     private Vector3 movementDirection;
     private Movement movement;
     
@@ -17,6 +17,10 @@ public class AIMovementInput : MonoBehaviour, MovementInput {
     }
 
     public void Move(Vector3 input) {
+
+        if (movement == null) {
+            movement = GetComponent<Movement>();
+        }
         movementDirection.x = input.x;
         movementDirection.z = input.z;
         
@@ -24,8 +28,17 @@ public class AIMovementInput : MonoBehaviour, MovementInput {
     }
 
     public void UpdateMoveDirection(float speed) {
-        movement.CurrentSpeed = speed;
-        StartCoroutine(ResetForwardSpeed());
+        try {
+            movement.CurrentSpeed = speed;
+            StartCoroutine(ResetForwardSpeed());
+        } catch (Exception e) {
+            Debug.Log(":: got exception :: " + gameObject.name);
+            Debug.Log(e.StackTrace);
+        }
+    }
+
+    public void SetResetTime(float resetTime) {
+        this.resetSpeedTime = resetTime;
     }
 
     private IEnumerator ResetForwardSpeed() {

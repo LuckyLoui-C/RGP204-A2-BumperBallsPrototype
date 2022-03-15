@@ -9,4 +9,6 @@ using UnityEngine;
 public interface MovementInput {
 
     void UpdateMoveDirection(float speed);
+
+    void SetResetTime(float resetTime);
 }

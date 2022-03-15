@@ -14,7 +14,7 @@ public class CharacterFloatsAboveBall : MonoBehaviour
         // direction the ball is facing
         direction = (playerTransform.transform.position - previousPosition.normalized.normalized);
         transform.LookAt(direction);
-        Vector3 characterRotation = new Vector3(-40.0f , 0, 0); // compensating for the wrong angle of the X
+        Vector3 characterRotation = new Vector3(-55.0f , 0, 0); // compensating for the wrong angle of the X
         transform.Rotate(characterRotation);
         // set the previous position
         previousPosition = playerTransform.transform.position;

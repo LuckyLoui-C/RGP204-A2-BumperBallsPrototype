@@ -13,17 +13,19 @@ public class BallCollisionDetection : MonoBehaviour {
     private MovementInput movementInput;
 
     private SphereCollider col;
+    private Rigidbody rb;
     
     private void Start() {
         movementInput = GetComponent<MovementInput>();
         col = GetComponent<SphereCollider>();
+        rb = GetComponent<Rigidbody>();
     }
 
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag("Player")) {
             // Debug.Log(":: " + gameObject.name + " :: hit :: " + other.gameObject.name);
 
-            movementInput.UpdateMoveDirection(-repelSpeed);
+            movementInput.UpdateMoveDirection(-repelSpeed + (-rb.velocity.magnitude / 2));
             col.enabled = false;
             StartCoroutine(EnableCollider());
             OnCollisionDetected?.Invoke();

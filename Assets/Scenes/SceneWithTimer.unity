@@ -406,7 +406,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeText: {fileID: 0}
-  timerIsRunning: 0
   timeToPlay: 3
   delayStart: 1
 --- !u!1001 &151701581
@@ -434,7 +433,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7130250416660834518, guid: 3a2c90a52d853764f8d8e1b39f8637ef, type: 3}
       propertyPath: repelSpeed
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7130250416660834520, guid: 3a2c90a52d853764f8d8e1b39f8637ef, type: 3}
       propertyPath: speed
@@ -1912,7 +1911,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7130250416660834518, guid: 3a2c90a52d853764f8d8e1b39f8637ef, type: 3}
       propertyPath: repelSpeed
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7130250416660834520, guid: 3a2c90a52d853764f8d8e1b39f8637ef, type: 3}
       propertyPath: speed
@@ -2761,6 +2760,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2118033137, guid: 2497c47670e702543a4c20c4c442311f, type: 3}
+      propertyPath: repelSpeed
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1898075867166280, guid: 2497c47670e702543a4c20c4c442311f, type: 3}
       propertyPath: m_Name
       value: Player1
@@ -2828,7 +2831,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7130250416660834518, guid: 3a2c90a52d853764f8d8e1b39f8637ef, type: 3}
       propertyPath: repelSpeed
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7130250416660834520, guid: 3a2c90a52d853764f8d8e1b39f8637ef, type: 3}
       propertyPath: speed

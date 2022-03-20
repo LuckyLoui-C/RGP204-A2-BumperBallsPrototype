@@ -28,7 +28,7 @@ public class GamePlayTimer : MonoBehaviour
             DisplayTime(timeRemaining);
         }
     }
-    void DisplayTime(float timeToDisplay) // TODO: Timer UI
+    void DisplayTime(float timeToDisplay)
     {
         if (timeRemaining <= 0.0f)
         {

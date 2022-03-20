@@ -87,7 +87,7 @@ public class GameController : MonoBehaviour {
         inGameCanvas.SetActive(false);
         gameOverScreen.SetActive(true);
         
-        Time.timeScale = 0.0f;
+        //Time.timeScale = 0.0f;
     }
 
     public void ReplayGame() {
